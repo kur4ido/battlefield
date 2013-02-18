@@ -36,4 +36,8 @@ public class WayPoint {
 			return w.m_position.equals(m_position);
 		}
 	}
+
+	public static float distance(WayPoint w, WayPoint voisin) {
+		return w.m_position.distance(voisin.m_position);
+	}
 }
