@@ -17,7 +17,7 @@ public class Surface {
 
 	// All objects on the surface are recorded in this vector of polylines.
 	private Vector<PolylineObject> objects; // The objects on the surface
-
+	private ArrayList<WayPoint> lstWayPoint;
 	/**
 	 * Well, right now the objects are built "by hands". May by the first
 	 * thing to do would be to put polylines objects in a map, and read the
@@ -33,6 +33,7 @@ public class Surface {
 		this.wxsize = wxsize;
 		this.wysize = wysize;
 		objects = new Vector<PolylineObject>();
+		lstWayPoint = new ArrayList<WayPoint>();
 
 		PolylineObject ob1 = new PolylineObject(new Vector2d(100F,200F),this);
 		ob1.addNode(new Vector2d(100F,250F));
@@ -49,6 +50,14 @@ public class Surface {
 		objects.add(ob2);
 	}
 
+	public void addObject(PolylineObject obj) {
+		objects.add(obj);
+	}
+	
+	public void mappingWayPoint() {
+		
+	}
+	
 	/**
 	 * Draws all objects on the surface.
 	 * 
@@ -79,7 +88,14 @@ public class Surface {
 
 	}
 
-
+	public PolylineObject estDansObjet(Vector2d p) {
+		for(int i=0;i<objects.size();i++) {
+			if (objects.get(i).contains(p)) {
+				return objects.get(i);
+			}
+		}
+		return null;
+	}
 
 
 }

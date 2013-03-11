@@ -130,5 +130,8 @@ public class PolylineObject {
 		g.fillPolygon(cachedPolygon);
 		//g.drawPolygon(cachedPolygon.xpoints, cachedPolygon.ypoints, cachedPolygon.npoints);
 	}
-	   
+	
+	public boolean contains(Vector2d p) {
+		return cachedPolygon.contains(p.x,p.y);
+	}
 }
