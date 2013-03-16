@@ -14,6 +14,7 @@ public class WayPoint {
 		m_position = position;
 		ID = nbWayPoint;
 		nbWayPoint ++;
+		m_lstVoisins = new ArrayList<WayPoint>();
 	}
 	
 	public void ajouterVoisin(WayPoint w) {

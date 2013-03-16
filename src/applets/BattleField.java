@@ -41,7 +41,7 @@ public class BattleField extends Applet
 	// Those constants are hard constants... Why? I don't know.
 	static final public float MAXX = 10000F; // Size of the battlefield, in float (not pixels)
 	static final public float MAXY = 7500F;
-	
+	static final public int DISTANCE_WP = 100;
 	static final public int PREF_VIEWER_XSIZE = 800; // size in pixels (in x, the y is automatically deduced)
 
 	// Viewer variables
@@ -95,7 +95,9 @@ public class BattleField extends Applet
      * Dynamic objects like bots and bullet are handled elsewhere.
      */
     public void initSurface() {
-        surface = new Surface(viewer_xsize,viewer_ysize,viewer_scale);   	
+        surface = new Surface(viewer_xsize,viewer_ysize,viewer_scale);
+        GrilleWayPoint gwp = new GrilleWayPoint((int)(DISTANCE_WP / viewer_scale));
+        gwp.faireMappage(surface);
     }
     
     
