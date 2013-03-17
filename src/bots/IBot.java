@@ -2,6 +2,7 @@ package bots;
 
 import java.awt.Graphics;
 
+import utils.Drawable;
 import utils.Vector2d;
 
 /**
@@ -11,7 +12,7 @@ import utils.Vector2d;
  * @author L. Simon, Univ. Paris Sud, 2008
  *
  */
-public interface IBot {
+public interface IBot extends Drawable{
 	
 	/**
 	 * @return Les coordonnées du bot, ou -1,-1 si pas sur la carte par ex.

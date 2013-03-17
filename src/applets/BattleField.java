@@ -37,11 +37,11 @@ public class BattleField extends Applet
 	private static final long serialVersionUID = 1L;
 
 	Surface surface; // The surface that contains the objects...
-	
+	GrilleWayPoint gwp;
 	// Those constants are hard constants... Why? I don't know.
 	static final public float MAXX = 10000F; // Size of the battlefield, in float (not pixels)
 	static final public float MAXY = 7500F;
-	static final public int DISTANCE_WP = 100;
+	static final public int DISTANCE_WP = 10;
 	static final public int PREF_VIEWER_XSIZE = 800; // size in pixels (in x, the y is automatically deduced)
 
 	// Viewer variables
@@ -96,7 +96,7 @@ public class BattleField extends Applet
      */
     public void initSurface() {
         surface = new Surface(viewer_xsize,viewer_ysize,viewer_scale);
-        GrilleWayPoint gwp = new GrilleWayPoint((int)(DISTANCE_WP / viewer_scale));
+        gwp = new GrilleWayPoint(DISTANCE_WP);
         gwp.faireMappage(surface);
     }
     
@@ -197,10 +197,12 @@ public class BattleField extends Applet
         }
         // 4. TODO: Draw the bullets / Special Effects.
         
+        gwp.draw(buffer_canvas);
         // Draws the line for the demo.
         
+ 
         // TODO: you should delete this...
-        if ( (pointA.x > -1) && (pointB.x > -1) ) {
+        /*if ( (pointA.x > -1) && (pointB.x > -1) ) {
 			gui_string = "Il va falloir modifier tout cela pour en faire un jeu... [";
         	if (surface.cansee(pointA, pointB)) {
         		buffer_canvas.setColor(Color.green);
@@ -211,9 +213,9 @@ public class BattleField extends Applet
         	}
         	gui_string +="]";
             buffer_canvas.drawLine((int)pointA.x, (int)pointA.y, (int)pointB.x, (int)pointB.y);
-        }
+        }*/
         
-        drawHUD();
+       // drawHUD();
         showbuffer();
     }
 

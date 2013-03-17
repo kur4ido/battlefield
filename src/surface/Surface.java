@@ -13,11 +13,11 @@ import java.awt.*;
 public class Surface {
 
 
-	public int wxsize, wysize;
+	public int width, height;
 
 	// All objects on the surface are recorded in this vector of polylines.
 	private Vector<PolylineObject> objects; // The objects on the surface
-	private ArrayList<WayPoint> lstWayPoint;
+	private GrilleWayPoint grille;
 	/**
 	 * Well, right now the objects are built "by hands". May by the first
 	 * thing to do would be to put polylines objects in a map, and read the
@@ -30,10 +30,9 @@ public class Surface {
 	 * @param scale
 	 */
 	public Surface( int wxsize, int wysize, float scale) {
-		this.wxsize = wxsize;
-		this.wysize = wysize;
+		this.width = wxsize;
+		this.height = wysize;
 		objects = new Vector<PolylineObject>();
-		lstWayPoint = new ArrayList<WayPoint>();
 
 		PolylineObject ob1 = new PolylineObject(new Vector2d(100F,200F),this);
 		ob1.addNode(new Vector2d(100F,250F));
