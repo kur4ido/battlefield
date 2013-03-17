@@ -3,7 +3,11 @@ package applets;
 import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 import bots.*;
 import utils.*;
@@ -36,6 +40,9 @@ public class BattleField extends Applet
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private static final String IMG_BLUE_FLAG = "pic" + File.pathSeparator + "BlueFlag.png";
+	private static final String IMG_RED_FLAG = "pic" + File.pathSeparator + "RedFlag.png";
+	
 	Surface surface; // The surface that contains the objects...
 	GrilleWayPoint gwp;
 	// Those constants are hard constants... Why? I don't know.
@@ -53,8 +60,10 @@ public class BattleField extends Applet
     Image buffer_canvasimage;
     Graphics buffer_canvas; // Where to draw (off-screen buffer)
     Graphics viewer_canvas; // What the user actually see (on-screen buffer)
-    ArrayList<IBot> listOfBot;
-
+    ArrayList<IBot> equipeRouge;
+    Drapeau drapeauRouge;
+    ArrayList<IBot> equipeBleu;
+    Drapeau drapeauBleu;
     /**
      * Thread that sleeps and update the screen.
      */
@@ -65,7 +74,8 @@ public class BattleField extends Applet
     public BattleField()
     {
         viewer_scale = MAXX/PREF_VIEWER_XSIZE;
-        listOfBot = new ArrayList<IBot>();
+        equipeRouge = new ArrayList<IBot>();
+        equipeBleu = new ArrayList<IBot>();
     }
     
  	public void init()
@@ -82,9 +92,10 @@ public class BattleField extends Applet
         
         addMouseListener(this);
         addMouseMotionListener(this);
+   
 
         initSurface();
-        initBots();
+        initBots(5);
         initBelettes();
     }
 
@@ -104,10 +115,17 @@ public class BattleField extends Applet
     /**
      * Called ones to init all your bots.
      */
-    public void initBots() {
+    public void initBots(int nbBots) {
     	// TODO
-    	listOfBot.add(new Bot(50,50,Color.BLUE));
-    	listOfBot.add(new Bot(750,750,Color.RED));
+    	try {
+			drapeauBleu = new Drapeau(gwp.getWayPoint(0), ImageIO.read(new File(IMG_BLUE_FLAG)));
+			drapeauRouge = new Drapeau(gwp.getWayPoint(gwp.getWayPoint().size() - 1),ImageIO.read(new File(IMG_RED_FLAG)));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	equipeBleu.add(new Bot(50,50,Color.BLUE));
+    	equipeRouge.add(new Bot(750,550,Color.RED));
     }
     
     /**
@@ -192,7 +210,10 @@ public class BattleField extends Applet
         buffer_canvas.drawRect(0, 0, viewer_xsize - 1, viewer_ysize - 1);
         
         // 3. TODO: Draw the bots in their position/direction
-        for(IBot bot : listOfBot) {
+        for(IBot bot : equipeBleu) {
+        	bot.draw(buffer_canvas);
+        }
+        for(IBot bot : equipeRouge) {
         	bot.draw(buffer_canvas);
         }
         // 4. TODO: Draw the bullets / Special Effects.
@@ -200,6 +221,8 @@ public class BattleField extends Applet
         gwp.draw(buffer_canvas);
         // Draws the line for the demo.
         
+        drapeauBleu.draw(buffer_canvas);
+        drapeauRouge.draw(buffer_canvas);
  
         // TODO: you should delete this...
         /*if ( (pointA.x > -1) && (pointB.x > -1) ) {
@@ -249,10 +272,10 @@ public class BattleField extends Applet
     public void updateBots()
     {
     	// TODO: You have to update all your bots here.
-    	for(IBot bot : listOfBot) {
+    	for(IBot bot : equipeRouge) {
     		bot.AI();
     	}
-    	for(IBot bot : listOfBot) {
+    	for(IBot bot : equipeBleu) {
     		bot.updatePosition();
     	}
    }

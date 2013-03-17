@@ -88,5 +88,9 @@ public class GrilleWayPoint implements Drawable{
 		}
 		
 	}
+
+	public WayPoint getWayPoint(int ID) {
+		return grille.get(ID);
+	}
 	
 }
