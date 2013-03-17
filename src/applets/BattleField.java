@@ -67,6 +67,8 @@ public class BattleField extends Applet
     Drapeau drapeauRouge;
     ArrayList<IBot> equipeBleu;
     Drapeau drapeauBleu;
+    
+    ArrayList<IBot> lstBot;
     /**
      * Thread that sleeps and update the screen.
      */
@@ -140,11 +142,13 @@ public class BattleField extends Applet
 			bot.setDrapeauEnnemi(drapeauRouge);
 		}
 		for(IBot bot : equipeRouge) {
-			bot.setAllies(equipeBleu);
-			bot.setEnnemies(equipeRouge);
+			bot.setAllies(equipeRouge);
+			bot.setEnnemies(equipeBleu);
 			bot.setDrapeauAmi(drapeauRouge);
 			bot.setDrapeauEnnemi(drapeauBleu);
 		}
+		lstBot = new ArrayList<IBot>(equipeRouge);
+		lstBot.addAll(equipeBleu);
     	
     }
     
@@ -292,19 +296,17 @@ public class BattleField extends Applet
     public void updateBots()
     {
     	// TODO: You have to update all your bots here.
-    	for(IBot bot : equipeRouge) {
-    		bot.AI();
-    	}
-    	for(IBot bot : equipeBleu) {
-    		bot.AI();
+    	ArrayList<IBot> al = new ArrayList<IBot>(lstBot);
+    	Random r = new Random();
+    	while (!al.isEmpty()) {
+    		int i = r.nextInt(al.size());
+    		al.get(i).AI();
+    		al.remove(i);
     	}
     	
-    	for(IBot bot : equipeRouge) {
+    	for(IBot bot : lstBot) {
     		bot.updatePosition();
-    	}   	
-    	for(IBot bot : equipeBleu) {
-    		bot.updatePosition();
-    	}
+    	}  
    }
 
   

@@ -51,7 +51,7 @@ public class WayPoint implements Drawable{
 	}
 
 	public static float distance(WayPoint w, WayPoint voisin) {
-		return w.m_position.distance(voisin.m_position);
+		return (float) w.m_position.distance(voisin.m_position);
 	}
 
 	@Override

@@ -28,6 +28,10 @@ public interface IBot extends Drawable{
 	
 	public void setAllies(ArrayList<IBot> list);
 	
+	public boolean isShot();
+	
+	public void shoot(IBot maCible);
+	
 	/**
 	 * On va représenter les bots en rond... Pour les collisions sur la carte,
 	 * on a besoin du rayon du bot
@@ -62,6 +66,8 @@ public interface IBot extends Drawable{
 	public void setDrapeauEnnemi(Drapeau flag);
 
 	public void setDrapeauAmi(Drapeau flag);
+
+	public int getPV();
 	
 	
 }

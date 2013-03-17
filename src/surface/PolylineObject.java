@@ -97,7 +97,7 @@ public class PolylineObject {
 				if (twoSegmentsIntersection(pointA, pointB, 
 						globalCoordPoints.get(i), globalCoordPoints.get(i+1>=nbPoints?0:i+1), tmpvect)) {
 					interesects = true;
-					float newLength = pointA.distance(tmpvect);
+					float newLength = (float) pointA.distance(tmpvect);
 					if ((bestLength < 0F) || (newLength < bestLength)) {
 						bestLength = newLength;
 						result.set(tmpvect);

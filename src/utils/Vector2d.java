@@ -54,8 +54,8 @@ public class Vector2d
         return (float)Math.sqrt(magnitudeSquared());
     }
 
-    public float distance(Vector2d that) {
-    	return (float)Math.sqrt((x-that.x)*(x-that.x)+(y*that.y)*(y*that.y));
+    public double distance(Vector2d that) {
+    	return Math.sqrt((x-that.x)*(x-that.x)+(y*that.y)*(y*that.y));
     }
     
     public float magnitudeSquared()
