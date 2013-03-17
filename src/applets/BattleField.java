@@ -1,11 +1,14 @@
 package applets;
 
+import ia.PathFinder;
+
 import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -40,8 +43,8 @@ public class BattleField extends Applet
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static final String IMG_BLUE_FLAG = "pic" + File.pathSeparator + "BlueFlag.png";
-	private static final String IMG_RED_FLAG = "pic" + File.pathSeparator + "RedFlag.png";
+	private static final String IMG_BLUE_FLAG = "pic" + File.separator + "BlueFlag.png";
+	private static final String IMG_RED_FLAG = "pic" + File.separator + "RedFlag.png";
 	
 	Surface surface; // The surface that contains the objects...
 	GrilleWayPoint gwp;
@@ -116,16 +119,33 @@ public class BattleField extends Applet
      * Called ones to init all your bots.
      */
     public void initBots(int nbBots) {
-    	// TODO
-    	try {
-			drapeauBleu = new Drapeau(gwp.getWayPoint(0), ImageIO.read(new File(IMG_BLUE_FLAG)));
-			drapeauRouge = new Drapeau(gwp.getWayPoint(gwp.getWayPoint().size() - 1),ImageIO.read(new File(IMG_RED_FLAG)));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+    	Bot.setParamStatic(surface, gwp);
+		drapeauBleu = new Drapeau(gwp.getWayPoint(0),Color.BLUE);
+		ArrayList<WayPoint> alBleu = PathFinder.listeDestination(drapeauBleu.getInit(), nbBots);
+		drapeauRouge = new Drapeau(gwp.getWayPoint(gwp.getWayPoint().size() - 1),Color.red);
+		ArrayList<WayPoint> alRouge = PathFinder.listeDestination(drapeauRouge.getInit(), nbBots);
+		Random r = new Random();
+		for(int i = 0; i < nbBots ; i ++) {
+			int indice = r.nextInt(alBleu.size());
+			equipeBleu.add(new Bot(alBleu.get(indice),Color.BLUE));
+			alBleu.remove(indice);
+			indice = r.nextInt(alRouge.size());
+			equipeRouge.add(new Bot(alRouge.get(indice),Color.RED));
+			alRouge.remove(indice);
 		}
-    	equipeBleu.add(new Bot(50,50,Color.BLUE));
-    	equipeRouge.add(new Bot(750,550,Color.RED));
+		for(IBot bot : equipeBleu) {
+			bot.setAllies(equipeBleu);
+			bot.setEnnemies(equipeRouge);
+			bot.setDrapeauAmi(drapeauBleu);
+			bot.setDrapeauEnnemi(drapeauRouge);
+		}
+		for(IBot bot : equipeRouge) {
+			bot.setAllies(equipeBleu);
+			bot.setEnnemies(equipeRouge);
+			bot.setDrapeauAmi(drapeauRouge);
+			bot.setDrapeauEnnemi(drapeauBleu);
+		}
+    	
     }
     
     /**
@@ -171,7 +191,7 @@ public class BattleField extends Applet
             repaint();
             try
             {
-                Thread.sleep(33);
+                Thread.sleep(120);
             }
             catch(InterruptedException _ex) { }
         } while(true);
@@ -218,7 +238,7 @@ public class BattleField extends Applet
         }
         // 4. TODO: Draw the bullets / Special Effects.
         
-        gwp.draw(buffer_canvas);
+        //gwp.draw(buffer_canvas);
         // Draws the line for the demo.
         
         drapeauBleu.draw(buffer_canvas);
@@ -275,6 +295,13 @@ public class BattleField extends Applet
     	for(IBot bot : equipeRouge) {
     		bot.AI();
     	}
+    	for(IBot bot : equipeBleu) {
+    		bot.AI();
+    	}
+    	
+    	for(IBot bot : equipeRouge) {
+    		bot.updatePosition();
+    	}   	
     	for(IBot bot : equipeBleu) {
     		bot.updatePosition();
     	}

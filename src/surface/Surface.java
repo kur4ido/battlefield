@@ -34,21 +34,54 @@ public class Surface {
 		this.height = wysize;
 		objects = new Vector<PolylineObject>();
 
-		PolylineObject ob1 = new PolylineObject(new Vector2d(100F,200F),this);
-		ob1.addNode(new Vector2d(100F,250F));
-		ob1.addNode(new Vector2d(200F,250F));
-		ob1.addNode(new Vector2d(200F,200F));
-		ob1.fixObject();
-		objects.add(ob1);
-
-		PolylineObject ob2 = new PolylineObject(new Vector2d(300F,500F),this);
-		ob2.addNode(new Vector2d(300F,800F));
-		ob2.addNode(new Vector2d(320F,800F));
-		ob2.addNode(new Vector2d(320F,500F));
-		ob2.fixObject();
-		objects.add(ob2);
+		PolylineObject obj1 = new PolylineObject(new Vector2d(100F,0F),this);
+		obj1.addNode(new Vector2d(100,100F));
+		obj1.addNode(new Vector2d(200F,100F));
+		obj1.addNode(new Vector2d(200F,0F));
+		obj1.fixObject();
+		objects.add(obj1);
+		
+		/*Symétrique*/
+		obj1 = new PolylineObject(new Vector2d(700F, 600F), this);
+		obj1.addNode(new Vector2d(700F,500F));
+		obj1.addNode(new Vector2d(600F,500F));
+		obj1.addNode(new Vector2d(600F,600F));
+		obj1.fixObject();
+		objects.add(obj1);
+		
+		obj1 = new PolylineObject(new Vector2d(200F,100F),this);
+		obj1.addNode(new Vector2d(200,200F));
+		obj1.addNode(new Vector2d(300F,200F));
+		obj1.addNode(new Vector2d(300F,100F));
+		obj1.fixObject();
+		objects.add(obj1);
+		
+		/*Symétrique*/
+		obj1 = new PolylineObject(new Vector2d(600F, 500F), this);
+		obj1.addNode(new Vector2d(600F,400F));
+		obj1.addNode(new Vector2d(500F,400F));
+		obj1.addNode(new Vector2d(500F,500F));
+		obj1.fixObject();
+		objects.add(obj1);
+		
+		obj1 = new PolylineObject(new Vector2d(600,0F),this);
+		obj1.addNode(new Vector2d(550F,250F));
+		obj1.addNode(new Vector2d(550F,300F));
+		obj1.addNode(new Vector2d(800F,0F));
+		obj1.fixObject();
+		objects.add(obj1);
+		
+		/*Symétrique*/
+		obj1 = new PolylineObject(new Vector2d(0F, 600F), this);
+		obj1.addNode(new Vector2d(350,300F));
+		obj1.addNode(new Vector2d(350,350F));
+		obj1.addNode(new Vector2d(200F,600F));
+		obj1.fixObject();
+		objects.add(obj1);
+		
 	}
 
+	
 	public void addObject(PolylineObject obj) {
 		objects.add(obj);
 	}

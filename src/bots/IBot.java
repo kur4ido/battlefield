@@ -1,7 +1,10 @@
 package bots;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
 
+import surface.Drapeau;
+import surface.WayPoint;
 import utils.Drawable;
 import utils.Vector2d;
 
@@ -18,6 +21,12 @@ public interface IBot extends Drawable{
 	 * @return Les coordonnées du bot, ou -1,-1 si pas sur la carte par ex.
 	 */
 	public Vector2d getCoord();
+	
+	public WayPoint getPosition();
+	
+	public void setEnnemies(ArrayList<IBot> list);
+	
+	public void setAllies(ArrayList<IBot> list);
 	
 	/**
 	 * On va représenter les bots en rond... Pour les collisions sur la carte,
@@ -47,6 +56,12 @@ public interface IBot extends Drawable{
 	 * Suivant ses decisions et les autres, le bot peut mettre a jour ses positions
 	 */
 	public void updatePosition();
+
+	public boolean isDead();
+
+	public void setDrapeauEnnemi(Drapeau flag);
+
+	public void setDrapeauAmi(Drapeau flag);
 	
 	
 }

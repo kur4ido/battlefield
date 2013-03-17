@@ -2,25 +2,60 @@ package ia;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+
 import surface.WayPoint;
 
 public class PathFinder {
 	
-	/*public static HashSet<WayPoint> listeDestination(WayPoint init, int mouvement) {
-		HashSet<WayPoint> resultat = new HashSet<WayPoint>();
-		resultat.add(init);
-		if(mouvement > 0) {
-			for(WayPoint t : init.getVoisins()) {
-				if(t.getCout() <= mouvement && t.isAccessible()) {
-					resultat.add(t);
-					resultat.addAll(listeDestination(t,mouvement - t.getCout()));
+	public static ArrayList<WayPoint> listeDestination(WayPoint init, int mouvement) {
+		ArrayList<WayPoint> resultat = new ArrayList<WayPoint>();
+		ArrayList<WayPoint> dejaVu = new ArrayList<WayPoint>();
+		ArrayList<WayPoint> enCours = new ArrayList<WayPoint>();
+		enCours.add(init);
+		HashMap<WayPoint, Float> coutsWayPoint = new HashMap<WayPoint, Float>();
+		HashMap<WayPoint, WayPoint> pere = new HashMap<WayPoint, WayPoint>();
+		coutsWayPoint.put(init, 0f);
+		while(!enCours.isEmpty()){
+			//System.out.println("inside while");
+			WayPoint w = choisirWayPoint(enCours, coutsWayPoint);
+			if(coutsWayPoint.get(w) < mouvement) {
+				enCours.remove(w);
+				dejaVu.add(w);
+				for(WayPoint voisin : w.getVoisins()){
+					if(!dejaVu.contains(voisin) && !enCours.contains(voisin)){
+						pere.put(voisin, w);	
+						coutsWayPoint.put(voisin, 1 + coutsWayPoint.get(w));
+						enCours.add(voisin);
+					}
+					else{
+						if( coutsWayPoint.get(voisin) > coutsWayPoint.get(w) +  1){
+							if(dejaVu.contains(voisin)){
+								dejaVu.remove(voisin);
+							}
+							pere.put(voisin, w);
+							coutsWayPoint.put(voisin, 1 + coutsWayPoint.get(w));
+							enCours.add(voisin);
+						}
+					}
 				}
+			}
+			else if(coutsWayPoint.get(w) == mouvement) {
+				enCours.remove(w);
+				dejaVu.add(w);
+			}else {
+				enCours.remove(w);
+			}
+		}
+		for(Map.Entry<WayPoint,Float> entre : coutsWayPoint.entrySet()) {
+			if(entre.getValue() <= mouvement) {
+				resultat.add(entre.getKey());
 			}
 		}
 		return resultat;
-	}*/
+	}
 	
-	public static ArrayList<WayPoint> aStar(WayPoint init,WayPoint dest, int mouvement) {
+	public static ArrayList<WayPoint> aStar(WayPoint init,WayPoint dest) {
 		ArrayList<WayPoint> dejaVu = new ArrayList<WayPoint>();
 		ArrayList<WayPoint> enCours = new ArrayList<WayPoint>();
 		enCours.add(init);
@@ -66,12 +101,6 @@ public class PathFinder {
 				t = pere.get(t);
 			}
 			resultat.add(0,t);
-			for(int i =  resultat.size() - 1; i > 0; i--) {
-				if(coutsWayPoint.get(resultat.get(i)) > mouvement) {
-					resultat.remove(i);
-				}
-			}
-
 			return resultat;
 		}
 	}

@@ -56,7 +56,7 @@ public class WayPoint implements Drawable{
 
 	@Override
 	public void draw(Graphics g) {
-		g.setColor(Color.blue);
+		g.setColor(Color.green);
 		g.fillOval((int)m_position.x, (int)m_position.y, RADIUS, RADIUS);
 		for(WayPoint w : m_lstVoisins) {
 			g.fillOval((int)w.m_position.x, (int)w.m_position.y, RADIUS, RADIUS);

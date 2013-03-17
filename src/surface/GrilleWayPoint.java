@@ -17,7 +17,7 @@ public class GrilleWayPoint implements Drawable{
 	}
 	
 	public void faireMappage(Surface s) {
-		WayPoint[][] tab = new WayPoint[s.width / distance][s.height / distance];
+		WayPoint[][] tab = new WayPoint[1 + s.width / distance][1 + s.height / distance];
 		for(int y = 0; y < tab[0].length - 1; y ++) {
 			for(int x = 0; x < tab.length - 1 ; x ++) {
 				Vector2d vec = new Vector2d((x + 0.5f) * distance, (y + 0.5f) * distance);
