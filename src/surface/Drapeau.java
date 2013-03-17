@@ -26,6 +26,10 @@ public class Drapeau implements Drawable{
 		init.draw(g);
 	}
 	
+	/**
+	 * Lorsque le drapeau est remis à 0, son état est "libre" et sa position est son
+	 * WayPoint initial
+	 */
 	public void reset() {
 		m_position = init.getPosition();
 		free = true;
