@@ -152,11 +152,20 @@ public class Bot implements IBot{
 
 	@Override
 	public void updatePosition() {
-		if(m_chemin.size() != 0) {
-			m_position = m_chemin.get(0);
-			m_chemin.remove(0);
+		if(pv > 0) {
+			if(m_chemin.size() != 0) {
+				m_position = m_chemin.get(0);
+				m_chemin.remove(0);
+				if(hasFlag) {
+					ennemiFlag.setPosition(m_position);
+				}
+			}
+			if(!hasFlag && ennemiFlag.getPosition().equalsVec(m_position.getPosition()) && ennemiFlag.isFree()) {
+				System.out.println("FLAG");
+				hasFlag = true;
+				ennemiFlag.setPosition(m_position);
+			}
 		}
-		
 	}
 	
 	public boolean canSeeBot(IBot ib){		
@@ -224,6 +233,7 @@ public class Bot implements IBot{
 		if(pv <= 0){
 			if(hasFlag){
 				ennemiFlag.reset();
+				hasFlag = false;
 			}
 			return true;
 		}

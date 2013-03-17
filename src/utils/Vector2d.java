@@ -39,7 +39,7 @@ public class Vector2d
         set(0.0F, 0.0F);
     }
 
-    public boolean equals(Vector2d that)
+    public boolean equalsVec(Vector2d that)
     {
         return x == that.x && y == that.y ;
     }

@@ -198,7 +198,14 @@ public class BattleField extends Applet
                 Thread.sleep(120);
             }
             catch(InterruptedException _ex) { }
-        } while(true);
+        } while(!partieTerminee());
+        if(partieTerminee()) {
+        	if(drapeauBleu.isFree()) {
+        		System.out.println("L'equipe BLEU a gagné");
+        	}else {
+        		System.out.println("L'equipe ROUGE a gagné");
+        	}
+        }
     }
 
     // Use very simple double buffering technique...
@@ -306,11 +313,21 @@ public class BattleField extends Applet
     	
     	for(IBot bot : lstBot) {
     		bot.updatePosition();
+    		if(partieTerminee()) {
+    			break;
+    		}
     	}  
    }
 
   
-    // Simply repaint the battle field... Called every frame...
+    private boolean partieTerminee() {
+		if(drapeauBleu.getPosition().equalsVec(drapeauRouge.getPosition())) {
+			return drapeauBleu.isFree() || drapeauRouge.isFree();
+		}
+		return false;
+	}
+
+	// Simply repaint the battle field... Called every frame...
     public void update(Graphics g)
     {
         paint(g);

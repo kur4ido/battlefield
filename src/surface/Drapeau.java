@@ -9,7 +9,7 @@ public class Drapeau implements Drawable{
 	private Vector2d m_position;
 	private WayPoint init;
 	private Color couleur;
-	
+	private boolean free = true;
 	
 	public Drapeau(WayPoint wp,Color color) {
 		init = wp;
@@ -28,10 +28,24 @@ public class Drapeau implements Drawable{
 	
 	public void reset() {
 		m_position = init.getPosition();
+		free = true;
 	}
 
 	public WayPoint getInit() {
 		return init;
+	}
+	
+	public Vector2d getPosition() {
+		return new Vector2d(m_position.x,m_position.y);
+	}
+
+	public boolean isFree() {
+		return free;
+	}
+
+	public void setPosition(WayPoint pos) {
+		m_position = new Vector2d(pos.getPosition().x,pos.getPosition().y);
+		free = false;
 	}
 
 }
